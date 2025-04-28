@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION=3.19
 FROM alpine:${ALPINE_VERSION}
 ARG TARGETARCH
 
@@ -27,4 +27,6 @@ ADD src/env.sh env.sh
 ADD src/backup.sh backup.sh
 ADD src/restore.sh restore.sh
 
-CMD ["sh", "run.sh"]
+RUN chmod +x /run.sh
+
+ENTRYPOINT ["/run.sh"]
