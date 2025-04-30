@@ -2,6 +2,10 @@ ARG ALPINE_VERSION=3.19
 FROM alpine:${ALPINE_VERSION}
 ARG TARGETARCH
 
+
+# Add tini
+RUN apk add --no-cache tini
+
 ADD src/install.sh install.sh
 RUN sh install.sh && rm install.sh
 
@@ -29,4 +33,4 @@ ADD src/restore.sh restore.sh
 
 RUN chmod +x /run.sh
 
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/run.sh"]
